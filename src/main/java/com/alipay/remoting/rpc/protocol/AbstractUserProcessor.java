@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -81,7 +81,6 @@ public abstract class AbstractUserProcessor<T> implements UserProcessor<T> {
 
     /**
      * By default, return true, means discard requests which timeout already.
-     * @return
      */
     @Override
     public boolean timeoutDiscard() {

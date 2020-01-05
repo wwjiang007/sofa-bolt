@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -22,18 +22,18 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.alipay.remoting.util.GlobalSwitch;
 import org.slf4j.Logger;
 
+import com.alipay.remoting.config.switches.GlobalSwitch;
 import com.alipay.remoting.log.BoltLoggerFactory;
 import com.alipay.remoting.util.RemotingUtil;
 import com.alipay.remoting.util.StringUtils;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.util.Attribute;
 
 /**
@@ -52,7 +52,7 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
 
     private ConnectionEventExecutor eventExecutor;
 
-    private ReconnectManager        reconnectManager;
+    private Reconnector             reconnectManager;
 
     private GlobalSwitch            globalSwitch;
 
@@ -140,10 +140,11 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
         Attribute attr = ctx.channel().attr(Connection.CONNECTION);
         if (null != attr) {
             // add reconnect task
-            if (this.globalSwitch.isOn(GlobalSwitch.CONN_RECONNECT_SWITCH)) {
+            if (this.globalSwitch != null
+                && this.globalSwitch.isOn(GlobalSwitch.CONN_RECONNECT_SWITCH)) {
                 Connection conn = (Connection) attr.get();
                 if (reconnectManager != null) {
-                    reconnectManager.addReconnectTask(conn.getUrl());
+                    reconnectManager.reconnect(conn.getUrl());
                 }
             }
             // trigger close connection event
@@ -167,7 +168,7 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
                     }
                     break;
                 default:
-                    return;
+                    break;
             }
         } else {
             super.userEventTriggered(ctx, event);
@@ -185,12 +186,6 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
         ctx.channel().close();
     }
 
-    /**
-     *
-     * @param conn
-     * @param remoteAddress
-     * @param type
-     */
     private void onEvent(final Connection conn, final String remoteAddress,
                          final ConnectionEventType type) {
         if (this.eventListener != null) {
@@ -245,12 +240,16 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
     }
 
     /**
-     * Setter method for property <tt>reconnectManager<tt>.
-     *
+     * please use {@link ConnectionEventHandler#setReconnector(Reconnector)} instead
      * @param reconnectManager value to be assigned to property reconnectManager
      */
+    @Deprecated
     public void setReconnectManager(ReconnectManager reconnectManager) {
         this.reconnectManager = reconnectManager;
+    }
+
+    public void setReconnector(Reconnector reconnector) {
+        this.reconnectManager = reconnector;
     }
 
     /**
@@ -263,27 +262,22 @@ public class ConnectionEventHandler extends ChannelDuplexHandler {
         Logger          logger   = BoltLoggerFactory.getLogger("CommonDefault");
         ExecutorService executor = new ThreadPoolExecutor(1, 1, 60L, TimeUnit.SECONDS,
                                      new LinkedBlockingQueue<Runnable>(10000),
-                                     new NamedThreadFactory("Bolt-conn-event-executor"));
+                                     new NamedThreadFactory("Bolt-conn-event-executor", true));
 
         /**
          * Process event.
          * 
-         * @param event
+         * @param runnable Runnable
          */
-        public void onEvent(Runnable event) {
+        public void onEvent(Runnable runnable) {
             try {
-                executor.execute(event);
+                executor.execute(runnable);
             } catch (Throwable t) {
                 logger.error("Exception caught when execute connection event!", t);
             }
         }
     }
 
-    /**
-     * print info log
-     * @param format
-     * @param addr
-     */
     private void infoLog(String format, String addr) {
         if (logger.isInfoEnabled()) {
             if (StringUtils.isNotEmpty(addr)) {

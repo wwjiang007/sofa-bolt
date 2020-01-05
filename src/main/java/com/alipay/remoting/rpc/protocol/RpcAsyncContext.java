@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -41,9 +41,10 @@ public class RpcAsyncContext implements AsyncContext {
 
     /**
      * Default constructor.
-     * 
-     * @param ctx
-     * @param cmd
+     *
+     * @param ctx remoting context
+     * @param cmd rpc request command
+     * @param processor rpc request processor
      */
     public RpcAsyncContext(final RemotingContext ctx, final RpcRequestCommand cmd,
                            final RpcRequestProcessor processor) {

@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -230,7 +230,7 @@ public class RemotingContext {
     }
 
     public RemotingContext setTimeoutDiscard(boolean failFastEnabled) {
-        this.timeoutDiscard = timeoutDiscard;
+        this.timeoutDiscard = failFastEnabled;
         return this;
     }
 }

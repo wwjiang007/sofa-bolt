@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -34,21 +34,20 @@ public interface RemotingProcessor<T extends RemotingCommand> {
      * @param defaultExecutor
      * @throws Exception
      */
-    public void process(RemotingContext ctx, T msg, ExecutorService defaultExecutor)
-                                                                                    throws Exception;
+    void process(RemotingContext ctx, T msg, ExecutorService defaultExecutor) throws Exception;
 
     /**
      * Get the executor.
      * 
      * @return
      */
-    public ExecutorService getExecutor();
+    ExecutorService getExecutor();
 
     /**
      * Set executor.
      * 
      * @param executor
      */
-    public void setExecutor(ExecutorService executor);
+    void setExecutor(ExecutorService executor);
 
 }

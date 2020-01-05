@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -36,14 +36,19 @@ public class InvokeTimeoutException extends RemotingException {
     }
 
     /**
-     * @param msg
+     * Constructor.
+     *
+     * @param msg the detail message
      */
     public InvokeTimeoutException(String msg) {
         super(msg);
     }
 
     /**
-     * @param msg
+     * Constructor.
+     *
+     * @param msg the detail message
+     * @param cause the cause
      */
     public InvokeTimeoutException(String msg, Throwable cause) {
         super(msg, cause);

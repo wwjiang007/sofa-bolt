@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -19,6 +19,7 @@ package com.alipay.remoting.rpc.protocol;
 import com.alipay.remoting.ProtocolManager;
 
 /**
+ * Protocol manager.
  *
  * @author tsui
  * @version $Id: RpcProtocols.java, v 0.1 2018-03-27 19:42 tsui Exp $

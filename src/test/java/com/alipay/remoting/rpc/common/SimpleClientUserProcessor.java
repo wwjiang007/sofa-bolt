@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -93,6 +93,7 @@ public class SimpleClientUserProcessor extends SyncUserProcessor<RequestBody> {
         if (bizCtx.isRequestTimeout()) {
             String errMsg = "Stop process in client biz thread, already timeout!";
             logger.warn(errMsg);
+            processTimes(request);
             throw new Exception(errMsg);
         }
         Assert.assertEquals(RequestBody.class, request.getClass());

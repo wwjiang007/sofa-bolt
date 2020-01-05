@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -33,7 +33,7 @@ import com.alipay.remoting.rpc.common.SimpleServerUserProcessor;
  */
 public class RpcServerDemoByMain {
     static Logger             logger                    = LoggerFactory
-                                                            .getLogger(BasicUsageDemoByJunit.class);
+                                                            .getLogger(RpcServerDemoByMain.class);
 
     BoltServer                server;
 
@@ -52,8 +52,12 @@ public class RpcServerDemoByMain {
         // 3. register user processor for client request
         server.registerUserProcessor(serverUserProcessor);
         // 4. server start
-        server.start();
-        System.out.println("server start ok!");
+        if (server.start()) {
+            System.out.println("server start ok!");
+        } else {
+            System.out.println("server start failed!");
+        }
+        // server.getRpcServer().stop();
     }
 
     public static void main(String[] args) {

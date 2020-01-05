@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -21,6 +21,7 @@ import com.alipay.remoting.codec.ProtocolCodeBasedDecoder;
 import io.netty.buffer.ByteBuf;
 
 /**
+ * Rpc protocol decoder.
  *
  * @author tsui
  * @version $Id: RpcProtocolDecoder.java, v 0.1 2018-03-27 19:28 tsui Exp $

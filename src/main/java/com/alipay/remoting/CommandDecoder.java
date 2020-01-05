@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -36,5 +36,5 @@ public interface CommandDecoder {
      * @param out
      * @throws Exception
      */
-    public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception;
+    void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception;
 }

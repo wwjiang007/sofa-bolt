@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -53,6 +53,9 @@ public interface CommandFactory {
     <T extends RemotingCommand> T createExceptionResponse(int id, final Throwable t, String errMsg);
 
     <T extends RemotingCommand> T createExceptionResponse(int id, ResponseStatus status);
+
+    <T extends RemotingCommand> T createExceptionResponse(int id, ResponseStatus status,
+                                                          final Throwable t);
 
     <T extends RemotingCommand> T createTimeoutResponse(final InetSocketAddress address);
 

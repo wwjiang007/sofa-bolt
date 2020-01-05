@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -37,6 +37,6 @@ public interface CommandEncoder {
      * @param out
      * @throws Exception
      */
-    public void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception;
+    void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception;
 
 }

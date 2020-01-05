@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -38,8 +38,10 @@ public class PortScan {
             ioe.printStackTrace();
         } finally {
             try {
-                ss.close();
-                logger.warn("Server socket close status: {}", ss.isClosed());
+                if (ss != null) {
+                    ss.close();
+                    logger.warn("Server socket close status: {}", ss.isClosed());
+                }
             } catch (IOException e) {
             }
         }
